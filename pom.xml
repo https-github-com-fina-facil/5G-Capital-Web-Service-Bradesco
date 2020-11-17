@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.3.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
+		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.decrypt.bradesco</groupId>
 	<artifactId>decrypt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>decrypt</name>
 	<description>Demo project for Spring Boot</description>
-
 	<properties>
 		<java.version>11</java.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -46,31 +46,99 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- 	<dependency>
-			<groupId>br.com.bradesco.webta.clientepj.webservices.WSWEBTAProxy</groupId>
-       <artifactId>WSWEBTAProxy</artifactId>
-			 <version>1.1</version>		
-       <systemPath>${basedir}/src/main/lib/wswebta-client-v.1.1.jar</systemPath> 
-   	</dependency> 
-	  <dependency>
-			<groupId>br.com.bradesco.webta.security.crypto.WEBTACryptoUtil</groupId>
-       <artifactId>WEBTACryptoUtil</artifactId>
-			 <version>1.1</version>		
-       <systemPath>${basedir}/src/main/lib/webta-cripto-v.1.4.jar</systemPath>
-   	</dependency>  -->
-
+		
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis</artifactId>
+			<scope>system</scope>
+			<version>1.1</version>
+			<systemPath>${basedir}/src/lib/axis.jar</systemPath>
+		</dependency>
+			<dependency>
+    	<groupId>commons-discovery</groupId>
+    	<artifactId>commons-discovery</artifactId>
+			<scope>system</scope>
+    	<version>1.0.4</version>
+			<systemPath>${basedir}/src/lib/commons-discovery-0.2.jar</systemPath>
+		</dependency>
+		<dependency>
+    	<groupId>commons-logging</groupId>
+    	<artifactId>commons-logging</artifactId>
+			<scope>system</scope>
+    	<version>1.0.4</version>
+			<systemPath>${basedir}/src/lib/commons-logging-1.0.4.jar</systemPath>
+		</dependency>
+		<dependency>
+    	<groupId>jaxrpc</groupId>
+    	<artifactId>jaxrpc</artifactId>
+			<scope>system</scope>
+    	<version>1.0</version>
+			<systemPath>${basedir}/src/lib/jaxrpc.jar</systemPath>
+		</dependency>
+		<dependency>
+    	<groupId>log4j</groupId>
+    	<artifactId>log4j</artifactId>
+			<scope>system</scope>
+    	<version>1.2.15</version>
+			<systemPath>${basedir}/src/lib/log4j-1.2.15.jar</systemPath>
+		</dependency>
+		<dependency>
+    	<groupId>mailapi</groupId>
+    	<artifactId>mailapi</artifactId>
+			<scope>system</scope>
+    	<version>1.0</version>
+			<systemPath>${basedir}/src/lib/mailapi.jar</systemPath>
+		</dependency>
+		<dependency>
+    	<groupId>saaj</groupId>
+    	<artifactId>saaj</artifactId>
+			<scope>system</scope>
+    	<version>1.0</version>
+			<systemPath>${basedir}/src/lib/saaj.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>webta-cripto</groupId>
+			<artifactId>webta-cripto</artifactId>
+			<scope>system</scope>
+			<version>1.4</version>
+			<systemPath>${basedir}/src/lib/webta-cripto-v.1.4.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>webtaTransferencia</groupId>
+			<artifactId>webtaTransferencia</artifactId>
+			<scope>system</scope>
+			<version>1.1.1</version>
+			<systemPath>${basedir}/src/lib/webtaTransferencia.v.1.1.1.jar</systemPath>
+		</dependency>
+		<dependency>
+    	<groupId>wsdl4j</groupId>
+    	<artifactId>wsdl4j</artifactId>
+			<scope>system</scope>
+    	<version>1.5.1</version>
+			<systemPath>${basedir}/src/lib/wsdl4j-1.5.1.jar</systemPath>
+		</dependency>
+		<dependency>
+    	<groupId>javax.xml.rpc</groupId>
+    	<artifactId>javax.xml.rpc-api</artifactId>
+    	<version>1.1.1</version>
+		</dependency>
+		<dependency>		
+			<groupId>wswebta-client</groupId>
+			<artifactId>wswebta-client</artifactId>
+			<scope>system</scope>
+			<version>1.1</version>
+			<systemPath>${basedir}/src/lib/wswebta-client-v.1.1.jar</systemPath>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				  <configuration>
-           <includeSystemScope>true</includeSystemScope>
- 					</configuration>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

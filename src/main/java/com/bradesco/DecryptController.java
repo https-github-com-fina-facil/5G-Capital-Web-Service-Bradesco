@@ -3,7 +3,7 @@ package com.bradesco;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,11 +16,20 @@ public class DecryptController {
   @Autowired
   DecryptService decryptService;
 
-  @RequestMapping(value = "/remessa", method = RequestMethod.GET)
+  @RequestMapping(value = "/retorno", method = RequestMethod.GET)
   public ResponseEntity<Object> remessa() {
 
-    return new ResponseEntity<>(decryptService.check(), HttpStatus.OK);
+    return new ResponseEntity<>(decryptService.arquivoRetorno(), HttpStatus.OK);
 
   }
+
+  /*
+   * @RequestMapping(value = "/retorno", method = RequestMethod.POST) public
+   * ResponseEntity<Object> retorno(@RequestBody Cnab cnab) {
+   * 
+   * return new ResponseEntity<>(decryptService.test(cnab), HttpStatus.OK);
+   * 
+   * }
+   */
 
 }
