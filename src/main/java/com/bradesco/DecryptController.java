@@ -1,5 +1,7 @@
 package com.bradesco;
 
+import com.bradesco.remessa.Remessa;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +25,11 @@ public class DecryptController {
 
   }
 
-  /*
-   * @RequestMapping(value = "/retorno", method = RequestMethod.POST) public
-   * ResponseEntity<Object> retorno(@RequestBody Cnab cnab) {
-   * 
-   * return new ResponseEntity<>(decryptService.test(cnab), HttpStatus.OK);
-   * 
-   * }
-   */
+  @RequestMapping(value = "/remessa", method = RequestMethod.POST)
+  public ResponseEntity<Object> retorno(@RequestBody Remessa remessa) {
+
+    return new ResponseEntity<Object>(decryptService.arquivoRemessa(remessa), HttpStatus.OK);
+
+  }
 
 }
