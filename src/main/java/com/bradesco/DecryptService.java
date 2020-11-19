@@ -151,7 +151,7 @@ public class DecryptService {
 
     ws.setEndpoint("https://www.webtatransferenciadearquivos.bradesco.com.br/webta/services/WSWEBTA");
 
-    File archive = new File("transferencia202010141728.bin");
+    File archive = new File(".bin/transferencia202010141728.bin");
 
     String idClienteTransAutom = null;
 
@@ -261,7 +261,7 @@ public class DecryptService {
 
     ws.setEndpoint("https://www.webtatransferenciadearquivos.bradesco.com.br/webta/services/WSWEBTA");
 
-    File archive = new File("transferencia202010141728.bin");
+    File archive = new File(".bin/transferencia202010141728.bin");
 
     String idClienteTransAutom = null;
 
