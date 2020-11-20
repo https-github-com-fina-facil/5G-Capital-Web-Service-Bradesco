@@ -20,6 +20,11 @@ public class DecryptController {
   @Autowired
   DecryptService decryptService;
 
+  @GetMapping("/")
+  public String start() {
+    return String.format("Web service Bradesco 5G!");
+  }
+
   @RequestMapping(value = "/arquivo/retorno", method = RequestMethod.GET)
   public ResponseEntity<Object> remessa() {
 
