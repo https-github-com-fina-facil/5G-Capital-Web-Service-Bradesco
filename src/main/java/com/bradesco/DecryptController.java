@@ -20,14 +20,14 @@ public class DecryptController {
   @Autowired
   DecryptService decryptService;
 
-  @RequestMapping(value = "/retorno", method = RequestMethod.GET)
+  @RequestMapping(value = "/arquivo/retorno", method = RequestMethod.GET)
   public ResponseEntity<Object> remessa() {
 
     return new ResponseEntity<>(decryptService.arquivoRetorno(), HttpStatus.OK);
 
   }
 
-  @GetMapping("/remessa")
+  @GetMapping("/arquivo/remessa")
   @ResponseBody
   public ResponseEntity<Object> getFoos(@RequestParam String id) {
     return new ResponseEntity<>(decryptService.arquivoRemessa(id), HttpStatus.OK);

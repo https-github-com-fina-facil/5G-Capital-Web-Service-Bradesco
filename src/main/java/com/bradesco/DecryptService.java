@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -51,11 +52,7 @@ public class DecryptService {
 
       WSRetornoExTO ret = ws.obterBlocoRetornoEx(wssessaoto.getCTRL(), numeroArquivo, offSet, 8192);
 
-      System.out.println("Ret getConteudo " + ret.getConteudo());
-
       numeroArquivo = ret.getNumeroArquivo();
-
-      System.out.println("NomeLogicoArquivo " + ret.getNomeLogicoArquivo());
 
       boolean existemArquivosParaReceber = true;
 
@@ -72,15 +69,18 @@ public class DecryptService {
               int offset = (TAMANHO_LL - 1 - i) * 8;
               ll[i] = (byte) ((ret.getConteudo().length >>> offset) & 0xFF);
             }
-            // Grava LL e dados
-            fos.write(ll);
+
           }
-          /* fos.write(ret.getConteudo()); */
 
           offSet += ret.getQuantidadeBytesLidos();
+          String file = null;
+
+          if (ret.getConteudo() != null) {
+            file = new String(ret.getConteudo(), StandardCharsets.UTF_8);
+          }
 
           retorno.setName(ret.getNomeLogicoArquivo());
-          retorno.setFile(ret.getConteudo());
+          retorno.setFile(file);
 
           if (offSet <= ret.getQuantidadeBytesArquivo()) {
             if (fos != null)
@@ -165,8 +165,6 @@ public class DecryptService {
     ws.setEndpoint("https://www.webtatransferenciadearquivos.bradesco.com.br/webta/services/WSWEBTA");
 
     File archive = new File("transferencia202010141728.bin");
-
-    /* File archive = new File("/home/webta/transferencia202010141728.bin"); */
 
     String idClienteTransAutom = null;
 

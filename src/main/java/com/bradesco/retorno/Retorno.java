@@ -2,14 +2,14 @@ package com.bradesco.retorno;
 
 public class Retorno {
 
-  private byte[] file;
+  private String file;
   private String name;
 
-  public byte[] getFile() {
+  public String getFile() {
     return file;
   }
 
-  public void setFile(byte[] file) {
+  public void setFile(String file) {
     this.file = file;
   }
 
