@@ -1,10 +1,13 @@
 package com.bradesco;
 
 import java.util.Arrays;
+
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.FileInputStream;
 
 import org.springframework.stereotype.Service;
@@ -24,9 +27,19 @@ import com.bradesco.retorno.Retorno;
 public class DecryptService {
 
   /**
+   * Tamanho maximo do LL
+   */
+  protected static final int LL_MAX = 524288;
+
+  /**
    * Tamanho do campo Logical Length (LL)
    */
   protected static final int TAMANHO_LL = 4;
+
+  /**
+   * Erro de leitura
+   */
+  protected static final int ERRO_LEITURA = -1;
 
   public void obterArquivoRetorno(WSWEBTAProxy ws, WSSessaoTO wssessaoto, Retorno retorno) {
     FileOutputStream fos = null;
@@ -151,7 +164,9 @@ public class DecryptService {
 
     ws.setEndpoint("https://www.webtatransferenciadearquivos.bradesco.com.br/webta/services/WSWEBTA");
 
-    File archive = new File(".bin/transferencia202010141728.bin");
+    File archive = new File("transferencia202010141728.bin");
+
+    /* File archive = new File("/home/webta/transferencia202010141728.bin"); */
 
     String idClienteTransAutom = null;
 
@@ -200,10 +215,12 @@ public class DecryptService {
 
   }
 
-  public void obterReinicioTxArquivoRemessa(Remessa remessa, String idClienteTransAutom, byte[] transfKey,
+  public void obterReinicioTxArquivoRemessa(String remessa, String idClienteTransAutom, byte[] transfKey,
       WSWEBTAProxy ws) {
 
     // Inicia processo de transmissao de um arquivo em formato texto
+
+    System.out.println("Entrou Aqui");
 
     try {
       // ABRE SESSAO
@@ -214,12 +231,16 @@ public class DecryptService {
       // ENVIA DESAFIO CRIPTOGRAFADO PARA O SERVIDOR
       ws.habilitarSessao(wssessaoto.getCTRL(), desafioCripto);
 
-      WSRemessaTO res = ws.obterReinicioTxArquivoRemessa(wssessaoto.getCTRL(), remessa.getName());
+      System.out.println(remessa);
+      // Inicia processo de transmissao de um arquivo em formato criptografado
+      WSRemessaTO res = ws.obterReinicioTxArquivoRemessa(wssessaoto.getCTRL(), remessa);
 
-      FileInputStream fis = new FileInputStream(remessa.getCnab());
+      System.out.println("Res" + res);
 
+      FileInputStream fis = new FileInputStream("arquivos/" + remessa);
       long offSet = res.getQuantidadeBytesArquivo();
       int numBloco = 1;
+
       boolean flagUltimoBloco = false;
       byte[] blocoLido = new byte[8192];
       byte[] blocoToTx;
@@ -234,20 +255,19 @@ public class DecryptService {
         blocoToTx = Arrays.copyOf(blocoLido, tamLido);
         if (numBloco > res.getUltimoBlocoRecebido()) {
           // Transmite demais blocos do arquivo
-          res = ws.transmitirBlocoArquivoRemessa(wssessaoto.getCTRL(), remessa.getName(), blocoToTx, offSet, numBloco,
+          res = ws.transmitirBlocoArquivoRemessa(wssessaoto.getCTRL(), remessa, blocoToTx, offSet, numBloco,
               flagUltimoBloco);
           offSet = res.getOffSet();
         }
         numBloco++;
-
-        // Encerra a sessao
-        ws.encerrarSessao(wssessaoto.getCTRL());
-
       }
 
+      fis.close();
+
     } catch (RemoteException e) { // Implementar adequadamente o tratamento da exceção
-      System.out.println("Erro na execucao de metodo do Web Service - Codigo de erro: " + e.getCause()
-          + " - Mensagem descritiva: " + e.getMessage());
+
+      System.out.println("Erro na execucao de metodo do Web Service - Codigo de erro: " + e);
+
     } catch (IOException e) {
       System.out.println("Erro de I/O na aplicacao - Mensagem descritiva: " + e.getMessage());
     }
@@ -255,13 +275,13 @@ public class DecryptService {
 
   }
 
-  public Remessa arquivoRemessa(Remessa remessa) {
+  public String arquivoRemessa(String remessa) {
 
     WSWEBTAProxy ws = new WSWEBTAProxy();
 
     ws.setEndpoint("https://www.webtatransferenciadearquivos.bradesco.com.br/webta/services/WSWEBTA");
 
-    File archive = new File(".bin/transferencia202010141728.bin");
+    File archive = new File("transferencia202010141728.bin");
 
     String idClienteTransAutom = null;
 
@@ -293,6 +313,23 @@ public class DecryptService {
     }
 
     return remessa;
+  }
+
+  public String createFileRemessa(Remessa remessa) {
+
+    try {
+      FileWriter myWriter = new FileWriter("arquivos/" + remessa.getName());
+      myWriter.write(remessa.getCnab());
+      myWriter.close();
+      System.out.println("Successfully wrote to the file.");
+
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+
+    return remessa.getName();
+
   }
 
 }
